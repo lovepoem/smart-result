@@ -23,8 +23,8 @@ public class ResultUtils {
     /***
      * wrap success result
      * @param data return data
-     * @param <T>
-     * @return
+     * @param <T> return data
+     * @return status and data
      */
     public static <T> Result<T> wrapSuccess(T data) {
         Result<T> result = new Result<T>();
@@ -36,9 +36,8 @@ public class ResultUtils {
 
     /***
      * wrap failure result ，return data is null
-     * @param
      * @param <T> return data
-     * @return
+     * @return status and data
      */
     public static <T> Result wrapSuccess() {
         return wrapSuccess(null);
@@ -48,7 +47,7 @@ public class ResultUtils {
      * wrap failure result
      * @param code error code
      * @param message error message
-     * @return
+     * @return status and data
      */
     public static Result wrapFailure(int code, String message) {
         Result result = new Result(code, message);
@@ -57,8 +56,8 @@ public class ResultUtils {
 
     /***
      * wrap failure result
-     * @param failCodeDesc
-     * @return
+     * @param failCodeDesc error code
+     * @return status and data
      */
     public static Result wrapFailure(IFailCode failCodeDesc) {
         return wrapFailure(failCodeDesc.getValue(), failCodeDesc.getDesc());
@@ -66,9 +65,9 @@ public class ResultUtils {
 
     /***
      * wrap failure result, Use when the error message has variables
-     * @param failCode
+     * @param failCode  error code
      * @param msgValues dynamic parameters of error message
-     * @return
+     * @return status and data
      */
     public static Result wrapFailure(IFailCode failCode, String... msgValues) {
         String msg = failCode.getDesc();
@@ -81,6 +80,7 @@ public class ResultUtils {
     /**
      * @return Print error and return failure, system level
      * @see Result ，Unified printing exception
+     * @param e Exception
      */
     public static Result wrapException(Exception e) {
         logger.error("Interface throws an exception:", e);

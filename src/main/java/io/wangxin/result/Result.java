@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Data wrapper class returned by Api
  *
- * @param <T>
+ * @param <T> return data
  * @author Xin Wang
  */
 public class Result<T> implements Serializable, Cloneable {
