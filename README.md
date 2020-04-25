@@ -1,5 +1,16 @@
 # smart-result
 
+## maven dependency
+```xml
+        <dependency>
+            <groupId>io.wangxin</groupId>
+            <artifactId>smart-result</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+```
+
+## Code description
 Result entity wrapper class, including return value status, object, error information, etc
 
 ### Introduction to some classes
