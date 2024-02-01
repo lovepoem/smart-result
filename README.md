@@ -1,8 +1,8 @@
 # smart-result
 
 ## Code description
-Java generic implementation version of Golang with multiple return values (including error and data)
-Result entity wrapper class, including return value status, object, error information, etc
+* Java generic implementation version of Golang with multiple return values (including error and data)
+* Result entity wrapper class, including return value status, object, error information, etc
 
 ## maven dependency
 ```xml
