@@ -2,18 +2,18 @@
 
 [English](README.md) | [中文](README_zh.md)
 
-A lightweight Java library for unified API response handling with comprehensive error management and best practices.
+一个轻量级的Java库，用于统一的API响应处理，具有全面的错误管理和最佳实践。
 
-## Features
+## 特性
 
-- 🚀 **Unified Response Format**: Standardized API response structure
-- 🛡️ **Error Code Management**: Centralized error code definitions
-- 🔧 **Utility Methods**: Rich helper methods for response creation
-- 📝 **Exception Handling**: Smart exception with error codes
-- 🎯 **Type Safety**: Generic support for any data type
-- 📦 **Lightweight**: Minimal dependencies, easy to integrate
+- 🚀 **统一响应格式**: 标准化的API响应结构
+- 🛡️ **错误代码管理**: 集中化的错误代码定义
+- 🔧 **工具方法**: 丰富的响应创建辅助方法
+- 📝 **异常处理**: 带有错误代码的智能异常
+- 🎯 **类型安全**: 支持任何数据类型的泛型
+- 📦 **轻量级**: 最小依赖，易于集成
 
-## Maven Dependency
+## Maven 依赖
 
 ```xml
 <dependency>
@@ -23,68 +23,68 @@ A lightweight Java library for unified API response handling with comprehensive 
 </dependency>
 ```
 
-## Quick Start
+## 快速开始
 
-### Basic Usage
+### 基本用法
 
 ```java
-// Success response with data
-User user = new User("John", "john@example.com");
+// 带数据的成功响应
+User user = new User("张三", "zhangsan@example.com");
 Result<User> result = ResultUtils.wrapSuccess(user);
 
-// Success response without data
+// 无数据的成功响应
 Result<Void> result = ResultUtils.wrapSuccess();
 
-// Error response
-Result<Void> result = ResultUtils.wrapFailure(400, "Bad Request");
+// 错误响应
+Result<Void> result = ResultUtils.wrapFailure(400, "请求参数错误");
 ```
 
-### Response Format
+### 响应格式
 
 ```json
 {
   "code": 0,
   "message": "",
   "data": {
-    "name": "John",
-    "email": "john@example.com"
+    "name": "张三",
+    "email": "zhangsan@example.com"
   }
 }
 ```
 
-## Core Components
+## 核心组件
 
 ### [Result](src/main/java/io/wangxin/result/Result.java)
-Unified API response wrapper class with generic support.
+支持泛型的统一API响应包装类。
 
-**Key Methods:**
-- `isSuccess()`: Check if response is successful
-- `getData()`: Get response data
-- `getCode()`: Get response code
-- `getMessage()`: Get response message
+**主要方法:**
+- `isSuccess()`: 检查响应是否成功
+- `getData()`: 获取响应数据
+- `getCode()`: 获取响应代码
+- `getMessage()`: 获取响应消息
 
 ### [IFailCode](src/main/java/io/wangxin/result/IFailCode.java)
-Abstract interface for error code definitions.
+错误代码定义的抽象接口。
 
-**Default Error Codes:**
-- `SYSTEM_EXCEPTION_CODE`: 500 (System Exception)
-- `OBJECT_NOT_FOUND`: 404 (Object Not Found)
+**默认错误代码:**
+- `SYSTEM_EXCEPTION_CODE`: 500 (系统异常)
+- `OBJECT_NOT_FOUND`: 404 (对象未找到)
 
 ### [ResultUtils](src/main/java/io/wangxin/result/utils/ResultUtils.java)
-Utility class with rich methods for response creation and error handling.
+具有丰富方法的响应创建和错误处理工具类。
 
 ### [SmartException](src/main/java/io/wangxin/result/SmartException.java)
-Custom exception class that integrates with error codes.
+与错误代码集成的自定义异常类。
 
-## Best Practices
+## 最佳实践
 
-### 1. Custom Error Code Implementation
+### 1. 自定义错误代码实现
 
 ```java
 public enum UserErrorCode implements IFailCode {
-    USER_NOT_FOUND(1001, "User not found: %s"),
-    INVALID_EMAIL(1002, "Invalid email format: %s"),
-    DUPLICATE_USER(1003, "User already exists: %s");
+    USER_NOT_FOUND(1001, "用户未找到: %s"),
+    INVALID_EMAIL(1002, "邮箱格式无效: %s"),
+    DUPLICATE_USER(1003, "用户已存在: %s");
 
     private final int value;
     private final String desc;
@@ -106,7 +106,7 @@ public enum UserErrorCode implements IFailCode {
 }
 ```
 
-### 2. Service Layer Implementation
+### 2. 服务层实现
 
 ```java
 @Service
@@ -140,7 +140,7 @@ public class UserService {
 }
 ```
 
-### 3. Controller Layer Implementation
+### 3. 控制器层实现
 
 ```java
 @RestController
@@ -162,7 +162,7 @@ public class UserController {
 }
 ```
 
-### 4. Exception Handling with Custom Error Codes
+### 4. 使用自定义错误代码的异常处理
 
 ```java
 public class UserNotFoundException extends SmartException {
@@ -171,7 +171,7 @@ public class UserNotFoundException extends SmartException {
     }
 }
 
-// Usage in service
+// 在服务中使用
 public Result<User> getUserById(Long id) {
     User user = userRepository.findById(id);
     if (user == null) {
@@ -181,7 +181,7 @@ public Result<User> getUserById(Long id) {
 }
 ```
 
-### 5. Global Exception Handler
+### 5. 全局异常处理器
 
 ```java
 @ControllerAdvice
@@ -201,7 +201,7 @@ public class GlobalExceptionHandler {
 }
 ```
 
-### 6. Response Validation
+### 6. 响应验证
 
 ```java
 public class ResponseValidator {
@@ -212,21 +212,21 @@ public class ResponseValidator {
     
     public static <T> T getDataOrThrow(Result<T> result) {
         if (!isValid(result)) {
-            throw new IllegalStateException("Invalid result: " + result.getMessage());
+            throw new IllegalStateException("无效的响应结果: " + result.getMessage());
         }
         return result.getData();
     }
 }
 
-// Usage
+// 使用示例
 Result<User> result = userService.getUserById(1L);
 if (ResponseValidator.isValid(result)) {
     User user = result.getData();
-    // Process user
+    // 处理用户数据
 }
 ```
 
-### 7. Testing Best Practices
+### 7. 测试最佳实践
 
 ```java
 @SpringBootTest
@@ -234,14 +234,14 @@ class UserServiceTest {
     
     @Test
     void getUserById_Success() {
-        // Given
+        // 给定条件
         Long userId = 1L;
-        User expectedUser = new User("John", "john@example.com");
+        User expectedUser = new User("张三", "zhangsan@example.com");
         
-        // When
+        // 执行操作
         Result<User> result = userService.getUserById(userId);
         
-        // Then
+        // 验证结果
         assertTrue(result.isSuccess());
         assertEquals(expectedUser, result.getData());
         assertEquals(0, result.getCode());
@@ -249,13 +249,13 @@ class UserServiceTest {
     
     @Test
     void getUserById_NotFound() {
-        // Given
+        // 给定条件
         Long userId = 999L;
         
-        // When
+        // 执行操作
         Result<User> result = userService.getUserById(userId);
         
-        // Then
+        // 验证结果
         assertFalse(result.isSuccess());
         assertEquals(UserErrorCode.USER_NOT_FOUND.getValue(), result.getCode());
         assertTrue(result.getMessage().contains("999"));
@@ -263,66 +263,66 @@ class UserServiceTest {
 }
 ```
 
-## Error Code Convention
+## 错误代码约定
 
-- **0**: Success
-- **1-999**: System level errors
-- **1000-1999**: User/authentication errors
-- **2000-2999**: Business logic errors
-- **3000-3999**: Data validation errors
-- **4000-4999**: External service errors
-- **5000+**: Custom application errors
+- **0**: 成功
+- **1-999**: 系统级错误
+- **1000-1999**: 用户/认证错误
+- **2000-2999**: 业务逻辑错误
+- **3000-3999**: 数据验证错误
+- **4000-4999**: 外部服务错误
+- **5000+**: 自定义应用错误
 
-## Migration Guide
+## 迁移指南
 
-### From Manual Response Creation
+### 从手动响应创建迁移
 
-**Before:**
+**迁移前:**
 ```java
 Map<String, Object> response = new HashMap<>();
 response.put("success", true);
 response.put("data", user);
-response.put("message", "Success");
+response.put("message", "成功");
 ```
 
-**After:**
+**迁移后:**
 ```java
 Result<User> result = ResultUtils.wrapSuccess(user);
 ```
 
-### From Custom Exception Handling
+### 从自定义异常处理迁移
 
-**Before:**
+**迁移前:**
 ```java
 try {
-    // business logic
+    // 业务逻辑
 } catch (Exception e) {
-    logger.error("Error occurred", e);
-    return ResponseEntity.status(500).body("Internal Server Error");
+    logger.error("发生错误", e);
+    return ResponseEntity.status(500).body("内部服务器错误");
 }
 ```
 
-**After:**
+**迁移后:**
 ```java
 try {
-    // business logic
+    // 业务逻辑
 } catch (Exception e) {
     return ResultUtils.wrapException(e);
 }
 ```
 
-## Contributing
+## 贡献指南
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork 本仓库
+2. 创建您的功能分支 (`git checkout -b feature/amazing-feature`)
+3. 提交您的更改 (`git commit -m '添加一些很棒的功能'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 打开一个 Pull Request
 
-## License
+## 许可证
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
-## Support
+## 支持
 
-If you have any questions or need help, please open an issue on GitHub or contact the maintainers.
+如果您有任何问题或需要帮助，请在 GitHub 上打开一个 issue 或联系维护者。
