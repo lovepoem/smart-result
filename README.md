@@ -15,6 +15,12 @@ A lightweight Java library for unified API response handling with comprehensive 
 
 ## Maven Dependency
 
+## Code description
+* Java generic implementation version of Golang with multiple return values (including error and data)
+* Result entity wrapper class, including return value status, object, error information, etc
+
+## maven dependency
+>>>>>>> origin/master
 ```xml
 <dependency>
     <groupId>io.wangxin</groupId>
@@ -26,6 +32,10 @@ A lightweight Java library for unified API response handling with comprehensive 
 ## Quick Start
 
 ### Basic Usage
+### Introduction to some classes
+ 
+#### [Result](https://github.com/lovepoem/smart-result/blob/master/src/main/java/io/wangxin/result/Result.java)
+    Unified api return result entity object
 
 ```java
 // Success response with data
